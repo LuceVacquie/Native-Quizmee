@@ -13,7 +13,8 @@ export default Box;
 
 const styles = ({backgroundColor}) => StyleSheet.create({
     box: {
-        flex:1,
+        height: '20%',
+        width: '50%',
         backgroundColor: backgroundColor,
     }
   });

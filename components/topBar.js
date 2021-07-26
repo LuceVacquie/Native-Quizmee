@@ -1,13 +1,11 @@
 import React from 'React'
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 
-const TopBar = ({handleOnPress}) => {
+const TopBar = () => {
     return(
-        <View>
-            <Pressable onPress={handleOnPress}>
-                <Text>QuizzME</Text>
-            </Pressable>
+        <View style={styles.container}>
+            <a href='/'>Quizmee</a>
         </View>
     )
 }
@@ -16,9 +14,13 @@ export default TopBar;
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+        height: '5%',
+        width: '100%',
+        backgroundColor: '#E847AE',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
+    link: {
+        textDecoration: 'none',
+    }
 });
