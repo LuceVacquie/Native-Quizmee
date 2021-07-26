@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native'
+import Box from '../components/box'
 
 const Home = () => {
     return (
         <View style={styles.container}>
-            <Text>Homepage</Text>
+            <Box backgroundColor='red' title='General Knowledge'/>
+            <Box backgroundColor='blue' title='Choose a category'/>
         </View>
     )
 }
@@ -18,4 +20,4 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-  });
+});
