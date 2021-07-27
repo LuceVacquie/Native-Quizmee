@@ -22,6 +22,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        color: 'whitesmoke'
+        color: 'whitesmoke',
+        fontFamily: 'Comfortaa-Bold',
+        fontSize: 24,
     }
 });

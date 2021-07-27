@@ -8,6 +8,8 @@ const Home = () => {
         <View style={styles.container}>
             <Box backgroundColor={theme.colors.green} title='General Knowledge'/>
             <Box backgroundColor={theme.colors.orange} title='Choose a category'/>
+            <Box backgroundColor={theme.colors.yellow} title='Party Quiz'/>
+            <Box backgroundColor={theme.colors.purple} title='Dual Quiz'/>
         </View>
     )
 }
@@ -19,6 +21,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#3B27BA',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
     },
 });
