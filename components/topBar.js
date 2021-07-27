@@ -2,11 +2,13 @@ import React from 'react'
 import { StyleSheet, Text, View, Linking, Button} from 'react-native'
 
 
-const TopBar = ({goBack}) => {
+const TopBar = ({goBack, isHomePage}) => {
 
     return(
         <View style={styles.container}>
-            <Button title='Back' onPress={() => goBack}/>
+            {isHomePage && 
+                <Button title='Back' onPress={() => goBack}/>
+            }
             <Text 
                 onPress={() => Linking.openURL('/')} 
                 style={styles.text}>

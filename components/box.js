@@ -2,11 +2,11 @@ import React from 'react'
 import { StyleSheet, Text, View, Linking } from 'react-native'
 
 
-const Box = ({backgroundColor, title, url}) => {
+const Box = ({backgroundColor, title, pushTo}) => {
     return(
         <View style={styles({backgroundColor}).box}>
             <Text 
-                onPress={() => Linking.openURL(url)} 
+                onPress={() => navigation.push(pushTo)} 
                 style={styles.text}>
                     {title}
             </Text>
