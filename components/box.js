@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 const Box = ({backgroundColor, title}) => {
     return(
@@ -16,5 +16,8 @@ const styles = ({backgroundColor}) => StyleSheet.create({
         height: '20%',
         width: '50%',
         backgroundColor: backgroundColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
     }
   });
