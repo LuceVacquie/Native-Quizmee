@@ -1,20 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { theme } from '../theme'
 
-const Profile = () => {
+const Categories = () => {
     return (
         <View style={styles.container}>
-            <Text>My profile</Text>
+            <Text>Categories</Text>
         </View>
     )
 }
 
-export default Profile;
+export default Categories;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#3B27BA',
+        backgroundColor: theme.colors.orange,
         alignItems: 'center',
         justifyContent: 'center',
     },

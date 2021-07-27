@@ -1,10 +1,15 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Linking } from 'react-native'
 
-const Box = ({backgroundColor, title}) => {
+
+const Box = ({backgroundColor, title, url}) => {
     return(
         <View style={styles({backgroundColor}).box}>
-            <Text>{title}</Text>
+            <Text 
+                onPress={() => Linking.openURL(url)} 
+                style={styles.text}>
+                    {title}
+            </Text>
         </View>
     )
 }
@@ -19,5 +24,9 @@ const styles = ({backgroundColor}) => StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
+    },
+    text: {
+        fontFamily: 'Comfortaa_600SemiBold',
+        fontSize: 16,
     }
   });

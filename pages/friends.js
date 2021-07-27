@@ -1,15 +1,15 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Button } from 'react-native'
 
-const Profile = () => {
+const Friends = () => {
     return (
         <View style={styles.container}>
-            <Text>My profile</Text>
+            <Text>My Friends</Text>
         </View>
     )
 }
 
-export default Profile;
+export default Friends;
 
 const styles = StyleSheet.create({
     container: {

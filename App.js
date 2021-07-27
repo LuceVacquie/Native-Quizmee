@@ -1,52 +1,67 @@
-import React from 'react';
-// import { StyleSheet, View } from 'react-native';
+import React, {useEffect} from 'react';
+import { BackHandler } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-//PAGES
-import Home from './pages/home';
-import Profile from './pages/profile';
+import { createStackNavigator } from '@react-navigation/stack';
+import AppLoading from 'expo-app-loading';
+import { 
+  useFonts, 
+  Comfortaa_300Light,
+  Comfortaa_400Regular,
+  Comfortaa_500Medium,
+  Comfortaa_600SemiBold,
+  Comfortaa_700Bold, 
+} from '@expo-google-fonts/comfortaa';
 
 //COMPONENTS
 import TopBar from './components/topBar';
+import Categories from './pages/categories';
+import TabNavigator from './tab-navigation';
 
 
-
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 
 export default function App() {
 
-  return (
+  let [fontsLoaded] = useFonts({
+    Comfortaa_300Light,
+    Comfortaa_400Regular,
+    Comfortaa_500Medium,
+    Comfortaa_600SemiBold,
+    Comfortaa_700Bold, 
+  })
+
+  const handleGoBack = () => {
+    navigation.goBack()
+    return true
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleGoBack);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleGoBack);
+    };
+  }, [])
+
+  if(!fontsLoaded){
+    return <AppLoading/>
+  } else {
+    return (
     <NavigationContainer>
-      <TopBar/>
-      <Tab.Navigator
-        screenOptions={ ({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            if(route.name === 'Home'){
-              iconName = focused
-              ? 'ios-home'
-              : 'ios-home-outline';
-            } else if (route.name === 'Profile'){
-              iconName = focused ? 'ios-person' : 'ios-person-outline';
-            }
-            return <Ionicons name={iconName} size={size} color={color} />
-          }
-        })}
-        tabBarOptions = {{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray'
-        }}
+      <TopBar goBack={handleGoBack}/>
+
+      <Stack.Navigator
+        initialRouteName='TabNavigator' 
       >
-        <Tab.Screen name='Home' component={Home} />
-        <Tab.Screen name='Profile' component={Profile} />
-      </Tab.Navigator>
+        <Stack.Screen 
+          name='TabNavigator' 
+          component={TabNavigator} 
+          options={{ headerShown: false }} />
+
+        <Stack.Screen name='Categories' component={Categories}/>
+      </Stack.Navigator>
+      
     </NavigationContainer>
   );
+  }
 }
-
-// const styles = StyleSheet.create({
-
-// });
