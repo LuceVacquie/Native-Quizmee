@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useReducer } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthContext } from './context';
+import AsyncStorage from '@react-native-community/async-storage';
 
 //STYLE
 import { theme } from './theme';
@@ -84,20 +85,91 @@ const TabNav = () => {
 
 export default function App() {
 
-  const [userToken, setUserToken] = useState(null)
+  const initialLoginState = {
+    isLoading: true,
+    userName: null,
+    userToken: null
+  }
 
-  const authContext = useMemo(() => {
-    return{
-      signIn: () => {
-        setUserToken('asdf')
-      },
-      signUp: () => {
-        setUserToken('asdf')
-      },
-      signOut: () => {
-        setUserToken(null)
-      },
+  const loginReducer = (prevState, action) => {
+    switch(action.type){
+      case 'RETRIEVE_TOKEN':
+        return{
+          ...prevState,
+          userToken: action.token,
+          isLoading: false,
+        };
+
+      case 'LOGIN':
+        return{
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
+
+      case 'SIGNUP':
+        return{
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
+
+      case 'LOGOUT':
+        return{
+          ...prevState,
+          userName: null,
+          userToken: null,
+          isLoading: false,
+        };
     }
+  }
+
+  
+
+  const authContext = useMemo(() => ({
+
+    signIn: async(userName, password) => {
+      let userToken;
+      userToken = null;
+      if(userName === 'user' && password === 'password'){
+        try {
+          userToken = 'abcd'
+          await AsyncStorage.setItem('userToken', userToken)
+        } catch(e) {
+          console.log(e)
+        }
+      }
+      dispatch({ type: 'LOGIN', id: userName, token: userToken})
+    },
+
+    signUp: () => {
+
+    },
+
+    signOut: async() => {
+      try {
+        await AsyncStorage.removeItem('userToken')
+      } catch(e) {
+        console.log(e)
+      }
+      dispatch({ type: 'LOGOUT' })
+    },
+
+  }), [])
+
+  useEffect(() => {
+    setTimeout(async() => {
+      let userToken;
+      userToken = null
+      try {
+        userToken = await AsyncStorage.getItem('userToken')
+      } catch(e) {
+        console.log(e)
+      }
+      dispatch({ type: 'RETRIEVE_TOKEN', token: userToken})
+    }, 1000)
   }, [])
 
   let [fontsLoaded] = useFonts({
@@ -108,24 +180,21 @@ export default function App() {
     Comfortaa_700Bold, 
   })
 
+  const [loginState, dispatch] = useReducer(loginReducer, initialLoginState);
 
-  if (!fontsLoaded){
+  if (!fontsLoaded && loginState.isLoading){
     return <AppLoading/>
-  } else {
-    return (
+  }
+
+  return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
 
       <TopBar/>
 
-      {userToken ? (
+      {loginState.userToken !== null ? 
         <TabNav/>
-        // <Tab.Navigator>
-        //   <Tab.Screen name='Home' component={HomeStackScreen} />
-        //   <Tab.Screen name='Profile' component={Profile} />
-        //   <Tab.Screen name='Friends' component={Friends} />
-        // </Tab.Navigator>
-        ) : (
+        : 
         <Stack.Navigator headerMode='none'>
           <Stack.Screen 
             name='SignIn' 
@@ -139,11 +208,9 @@ export default function App() {
             options={{ title: 'Create an account' }}
           />
         </Stack.Navigator>
-      )
       }
       </NavigationContainer>
     </AuthContext.Provider>
     
   );
-  }
 }
