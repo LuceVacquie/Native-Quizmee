@@ -37,14 +37,13 @@ const HomeStack = createStackNavigator();
 //Home navigation -> different types of quiz
 const HomeStackScreen = () => {
   return(
-  <HomeStack.Navigator headerMode='none'>
+  <HomeStack.Navigator>
     <HomeStack.Screen name='Home' component={Home}/>
     <HomeStack.Screen 
       name='Categories' 
       component={Categories} 
-      options={({ route }) => ({
-        title: route.params.name
-      })}/>
+      // options={{title: 'Quizmee'}}
+    />
   </HomeStack.Navigator>
   )
 }
@@ -184,18 +183,18 @@ export default function App() {
 
   if (!fontsLoaded && loginState.isLoading){
     return <AppLoading/>
-  }
+  }      
 
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
 
-      <TopBar/>
+      {/* <TopBar/> */}
 
       {loginState.userToken !== null ? 
         <TabNav/>
         : 
-        <Stack.Navigator headerMode='none'>
+        <Stack.Navigator>
           <Stack.Screen 
             name='SignIn' 
             component={SignIn} 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { theme } from '../theme'
+import Box from '../components/box'
 
 export const GeneralKnowledge = () => {
     return (
@@ -14,6 +15,10 @@ export const Categories = ({route}) => {
     return (
         <View style={styles.container}>
             {route.params.name && <Text>{route.params.name}</Text>}
+            <Box backgroundColor={theme.colors.purple} title='Sciences'/>
+            <Box backgroundColor={theme.colors.pink} title='History'/>
+            <Box backgroundColor={theme.colors.green} title='Geography'/>
+            <Box backgroundColor={theme.colors.yellow} title='Culture'/>
         </View>
     )
 }
@@ -39,6 +44,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.colors.orange,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
     },
   });
